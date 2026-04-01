@@ -10,12 +10,40 @@ import Ground from './Ground'
 import Roads from './Road'
 import CityTitle from './CityTitle'
 
-// First-person movement controller
+const STREET_LEVEL = 2
+const DROP_DURATION = 0.8 // seconds to drop from height to street level
+const WALK_SPEED = 18
+
+// First-person movement + gravity drop
 function FirstPersonController() {
   const { camera } = useThree()
   const keys = useRef<Record<string, boolean>>({})
   const direction = useRef(new THREE.Vector3())
 
+  // Gravity/drop state
+  const isDropping = useRef(false)
+  const dropTimer = useRef(0)
+  const dropStartY = useRef(STREET_LEVEL)
+  const wasJustDropped = useRef(false)
+  const prevCameraMode = useRef('orbit')
+
+  // Camera mode from store
+  const cameraMode = useCityStore(s => s.cameraMode)
+
+  // Detect when first-person mode is entered
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (prevCameraMode.current === 'orbit' && cameraMode === 'firstperson') {
+      // Starting first-person — begin gravity drop
+      dropStartY.current = camera.position.y
+      dropTimer.current = 0
+      isDropping.current = true
+      wasJustDropped.current = true
+    }
+    prevCameraMode.current = cameraMode
+  }, [cameraMode])
+
+  // Keyboard input
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => { keys.current[e.code] = true }
     const onKeyUp = (e: KeyboardEvent) => { keys.current[e.code] = false }
@@ -28,7 +56,23 @@ function FirstPersonController() {
   }, [])
 
   useFrame((_, delta) => {
-    const speed = 15
+    // ── Gravity drop ──────────────────────────────────────────
+    if (isDropping.current) {
+      dropTimer.current += delta
+      const t = Math.min(dropTimer.current / DROP_DURATION, 1)
+      // Exponential ease-out — fast start, slow landing
+      const ease = 1 - Math.exp(-t * 4)
+      camera.position.y = dropStartY.current + (STREET_LEVEL - dropStartY.current) * ease
+
+      if (t >= 1) {
+        camera.position.y = STREET_LEVEL
+        isDropping.current = false
+      }
+      // Skip movement while dropping
+      return
+    }
+
+    // ── Normal walking ────────────────────────────────────────
     direction.current.set(0, 0, 0)
 
     const forward = new THREE.Vector3()
@@ -42,9 +86,9 @@ function FirstPersonController() {
     if (keys.current['KeyA'] || keys.current['ArrowLeft']) direction.current.sub(right)
     if (keys.current['KeyD'] || keys.current['ArrowRight']) direction.current.add(right)
 
-    direction.current.normalize().multiplyScalar(speed * delta)
+    direction.current.normalize().multiplyScalar(WALK_SPEED * delta)
     camera.position.add(direction.current)
-    camera.position.y = Math.max(2, camera.position.y)
+    camera.position.y = Math.max(STREET_LEVEL, camera.position.y)
   })
 
   return null

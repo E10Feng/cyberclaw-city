@@ -6,13 +6,13 @@ import * as THREE from 'three'
 import { districtColors } from '@/data/city-map'
 
 const DISTRICT_LABELS: { label: string; position: [number, number, number]; color: string }[] = [
-  { label: 'CORE', position: [0, 30, 0], color: districtColors.core },
-  { label: 'BUILD PIPELINE', position: [-39, 20, -25], color: districtColors['build-pipeline'] },
-  { label: 'JOB DISTRICT', position: [52, 20, -15], color: districtColors['job-pipeline'] },
-  { label: 'COMMS', position: [-13, 20, 50], color: districtColors.comms },
-  { label: 'MEMORY LANE', position: [35, 20, 28], color: districtColors.memory },
-  { label: 'AI BRIEFING', position: [0, 20, 80], color: districtColors['ai-briefing'] },
-  { label: 'SKILLS QUARTER', position: [-47, 20, 8], color: districtColors.skills },
+  { label: 'CORE', position: [0, 16, 0], color: districtColors.core },
+  { label: 'BUILD PIPELINE', position: [-39, 12, -25], color: districtColors['build-pipeline'] },
+  { label: 'JOB DISTRICT', position: [52, 12, -15], color: districtColors['job-pipeline'] },
+  { label: 'COMMS', position: [-13, 12, 50], color: districtColors.comms },
+  { label: 'MEMORY LANE', position: [35, 12, 28], color: districtColors.memory },
+  { label: 'AI BRIEFING', position: [0, 12, 80], color: districtColors['ai-briefing'] },
+  { label: 'SKILLS QUARTER', position: [-47, 12, 8], color: districtColors.skills },
 ]
 
 function DistrictLabel({ label, position, color }: { label: string; position: [number, number, number]; color: string }) {
@@ -20,13 +20,13 @@ function DistrictLabel({ label, position, color }: { label: string; position: [n
 
   useFrame((state) => {
     if (!groupRef.current) return
-    groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.2
+    groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.1
   })
 
   return (
     <group ref={groupRef} position={position}>
       <Text
-        fontSize={2.5}
+        fontSize={1.5}
         color={color}
         anchorX="center"
         anchorY="middle"

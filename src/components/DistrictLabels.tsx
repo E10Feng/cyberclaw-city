@@ -15,25 +15,31 @@ const DISTRICT_LABELS: { label: string; position: [number, number, number]; colo
   { label: 'SKILLS QUARTER', position: [-47, 12, 8], color: districtColors.skills },
 ]
 
-function DistrictLabel({ label, position, color }: { label: string; position: [number, number, number]; color: string }) {
+// Billboard wrapper — text always faces the camera
+function BillboardText({ children, position, color, fontSize = 1.5 }: {
+  children: React.ReactNode
+  position: [number, number, number]
+  color: string
+  fontSize?: number
+}) {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {
     if (!groupRef.current) return
-    groupRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.5 + position[0]) * 0.1
+    groupRef.current.lookAt(state.camera.position)
   })
 
   return (
     <group ref={groupRef} position={position}>
       <Text
-        fontSize={1.5}
+        fontSize={fontSize}
         color={color}
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.05}
         outlineColor="#000000"
       >
-        {label}
+        {children}
       </Text>
     </group>
   )
@@ -43,7 +49,9 @@ export default function DistrictLabels() {
   return (
     <>
       {DISTRICT_LABELS.map(({ label, position, color }) => (
-        <DistrictLabel key={label} label={label} position={position} color={color} />
+        <BillboardText key={label} position={position} color={color}>
+          {label}
+        </BillboardText>
       ))}
     </>
   )

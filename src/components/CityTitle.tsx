@@ -9,11 +9,12 @@ export default function CityTitle() {
 
   useFrame((state) => {
     if (!groupRef.current) return
-    groupRef.current.position.y = 18 + Math.sin(state.clock.elapsedTime * 0.8) * 0.3
+    groupRef.current.position.y = 38 + Math.sin(state.clock.elapsedTime * 0.8) * 0.3
+    groupRef.current.lookAt(state.camera.position)
   })
 
   return (
-    <group ref={groupRef} position={[0, 26, -50]}>
+    <group ref={groupRef} position={[0, 38, -50]}>
       <Text
         fontSize={4}
         color="#00f0ff"

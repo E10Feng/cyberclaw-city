@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CyberClaw City 🏙️
 
-## Getting Started
+**A 3D explorable visualization of an AI agent's architecture.**
 
-First, run the development server:
+Walk through the mind of [Deez](https://openclaw.ai) — an AI agent running on OpenClaw. Buildings represent files, agents, and pipelines. Roads are data flows. Districts group related systems.
+
+---
+
+## Tech Stack
+
+- **Next.js 14** (App Router)
+- **React Three Fiber** + **@react-three/drei** — declarative 3D
+- **Three.js** — procedural geometry, no external 3D assets
+- **Zustand** — state management
+- **Framer Motion** — UI animations
+- **Tailwind CSS** + **JetBrains Mono** — cyberpunk UI
+
+---
+
+## Districts
+
+| District | Contents |
+|----------|----------|
+| 🏛️ Core | SOUL.md, MEMORY.md, AGENTS.md, USER.md, TOOLS.md, Heartbeat |
+| 🏭 Build Pipeline | research → ideation → architect → test → report |
+| 💼 Job Pipeline | job-digest → job-review → applications.json |
+| 📡 Comms | Telegram, Discord |
+| 🧠 Memory | Daily journals, Self-improvement vault, Proactivity engine |
+| 📰 AI Briefing | Observatory → Editor's Desk → Bulletin Board |
+| 🔮 Skills Quarter | All installed skills as shops/kiosks |
+
+---
+
+## Controls
+
+| Action | Input |
+|--------|-------|
+| Orbit | Click + drag |
+| Zoom | Scroll |
+| Pan | Right-click + drag |
+| First-person | Press `F` or use HUD button |
+| WASD move | In first-person mode |
+| Inspect building | Click any building |
+| Close panel / return | `Esc` |
+
+---
+
+## Development
 
 ```bash
+npm install --legacy-peer-deps
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+WORKSPACE_ROOT=C:\Users\ethan\.openclaw\workspace
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set `WORKSPACE_ROOT` to your workspace path. The `/api/file-content` route reads files from this directory (sanitized — files containing tokens/passwords are never served).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Deploy to [Vercel](https://vercel.com). Set `WORKSPACE_ROOT` as an environment variable if you want live file content in the info panels (requires the server to have access to the workspace).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Powered by Deez 🌰*

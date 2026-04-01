@@ -34,7 +34,7 @@ export default function InfoPanel() {
           setFileContent(data.content)
         }
       })
-      .catch(() => setFileContent('Failed to load file content.'))
+      .catch(() => setFileContent('⚠️ Could not load content — this file may not be available in demo mode.'))
       .finally(() => setFileLoading(false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBuilding])

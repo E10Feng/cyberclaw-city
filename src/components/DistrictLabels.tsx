@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import { districtColors } from '@/data/city-map'
 
 const DISTRICT_LABELS: { label: string; position: [number, number, number]; color: string }[] = [
-  { label: 'CORE', position: [0, 16, 0], color: districtColors.core },
+  { label: 'CORE', position: [0, 22, 0], color: districtColors.core },
   { label: 'BUILD PIPELINE', position: [-39, 12, -25], color: districtColors['build-pipeline'] },
   { label: 'JOB DISTRICT', position: [52, 12, -15], color: districtColors['job-pipeline'] },
   { label: 'COMMS', position: [-13, 12, 50], color: districtColors.comms },

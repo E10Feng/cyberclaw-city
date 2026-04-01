@@ -13,9 +13,9 @@ export default function CityTitle() {
   })
 
   return (
-    <group ref={groupRef} position={[0, 18, -30]}>
+    <group ref={groupRef} position={[0, 26, -50]}>
       <Text
-        fontSize={3}
+        fontSize={4}
         color="#00f0ff"
         anchorX="center"
         anchorY="middle"

@@ -9,6 +9,7 @@ import Building from './Building'
 import Ground from './Ground'
 import Roads from './Road'
 import CityTitle from './CityTitle'
+import DistrictLabels from './DistrictLabels'
 
 const STREET_LEVEL = 2
 const DROP_DURATION = 0.8 // seconds to drop from height to street level
@@ -123,6 +124,7 @@ function SceneContent() {
       <Ground />
       <Roads />
       <CityTitle />
+      <DistrictLabels />
 
       {buildings.map(b => (
         <Building key={b.id} building={b} />

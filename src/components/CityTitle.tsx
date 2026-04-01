@@ -19,9 +19,6 @@ export default function CityTitle() {
         color="#00f0ff"
         anchorX="center"
         anchorY="middle"
-        font={undefined}
-        outlineWidth={0.05}
-        outlineColor="#0080ff"
       >
         CYBERCLAW CITY
       </Text>

@@ -1,7 +1,7 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls, PointerLockControls, Stars } from '@react-three/drei'
+import { OrbitControls, Stars, PointerLockControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { buildings } from '@/data/city-map'
 import { useCityStore } from '@/store/useCity'
@@ -52,22 +52,6 @@ function FirstPersonController() {
 
 function SceneContent() {
   const cameraMode = useCityStore(s => s.cameraMode)
-  const setCameraMode = useCityStore(s => s.setCameraMode)
-  const setSelectedBuilding = useCityStore(s => s.setSelectedBuilding)
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.code === 'KeyF') {
-        setCameraMode(cameraMode === 'orbit' ? 'firstperson' : 'orbit')
-      }
-      if (e.code === 'Escape') {
-        setCameraMode('orbit')
-        setSelectedBuilding(null)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [cameraMode, setCameraMode, setSelectedBuilding])
 
   return (
     <>
@@ -75,7 +59,7 @@ function SceneContent() {
       <fog attach="fog" args={['#050508', 60, 180]} />
 
       {/* Lighting */}
-      <ambientLight intensity={0.3} color="#1a1a2e" />
+      <ambientLight intensity={0.6} color="#1a1a2e" />
       <directionalLight
         position={[20, 30, 10]}
         intensity={0.5}
@@ -122,6 +106,25 @@ function SceneContent() {
 }
 
 export default function Scene() {
+  const cameraMode = useCityStore(s => s.cameraMode)
+  const setCameraMode = useCityStore(s => s.setCameraMode)
+  const setSelectedBuilding = useCityStore(s => s.setSelectedBuilding)
+
+  // Global key handler for camera mode switching
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code === 'KeyF') {
+        setCameraMode(cameraMode === 'orbit' ? 'firstperson' : 'orbit')
+      }
+      if (e.code === 'Escape') {
+        setCameraMode('orbit')
+        setSelectedBuilding(null)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [cameraMode, setCameraMode, setSelectedBuilding])
+
   return (
     <Canvas
       camera={{ position: [0, 35, 60], fov: 60, near: 0.1, far: 500 }}
